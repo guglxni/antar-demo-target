@@ -18,7 +18,7 @@ def train_step(batch):
         logits = model(x)
         loss = torch.nn.functional.mse_loss(logits, y)
     scaler.scale(loss).backward()
-    # BUG: no torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0) here
+    torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
     scaler.step(optimizer)
     scaler.update()
     scheduler.step()
